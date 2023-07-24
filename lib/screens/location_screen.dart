@@ -6,12 +6,14 @@ import '../services/weather.dart';
 class LocationScreen extends StatefulWidget {
   @override
   const LocationScreen({super.key, required this.locationWeather});
+  // ignore: prefer_typing_uninitialized_variables
   final locationWeather;
+  @override
+  // ignore: library_private_types_in_public_api
   _LocationScreenState createState() => _LocationScreenState();
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  @override
   WeatherModel weather = WeatherModel();
   String location = 'Error';
   String locationSubText = 'Cannot be fetched';
@@ -23,12 +25,10 @@ class _LocationScreenState extends State<LocationScreen> {
 
   void updateUI(dynamic weatherData) {
     setState(() {
+      // ignore: unnecessary_null_comparison
       if (weather != null) {
         location = weatherData['name'].toString();
-        locationSubText = 'Latitude / Longitude - ' +
-            weatherData['coord']['lat'].toString() +
-            ' / ' +
-            weatherData['coord']['lon'].toString();
+        locationSubText = 'Latitude / Longitude - ${weatherData['coord']['lat']} / ${weatherData['coord']['lon']}';
         temperature = weatherData['main']['temp'].toStringAsFixed(1) + '°';
         weatherCondtion =
             weatherData['weather'][0]['description'].toUpperCase();
@@ -45,18 +45,19 @@ class _LocationScreenState extends State<LocationScreen> {
     updateUI(widget.locationWeather);
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/weather_background.jpg'),
+            image: const AssetImage('images/weather_background.jpg'),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
                 Colors.white.withOpacity(0.8), BlendMode.dstATop),
           ),
         ),
-        constraints: BoxConstraints.expand(),
+        constraints: const BoxConstraints.expand(),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(25.0),
@@ -72,7 +73,7 @@ class _LocationScreenState extends State<LocationScreen> {
                         var data = await weather.getLocationWeather();
                         updateUI(data);
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.near_me,
                         color: Colors.white,
                         size: 30.0,
@@ -85,12 +86,13 @@ class _LocationScreenState extends State<LocationScreen> {
                             builder: (context) => CityScreen(),
                           ),
                         );
-                        if(result != null){
-                          var weatherData = await weather.getCityLocation(result);
+                        if (result != null) {
+                          var weatherData =
+                              await weather.getCityLocation(result);
                           updateUI(weatherData);
                         }
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.list,
                         size: 30.0,
                         color: Colors.white,
@@ -138,7 +140,7 @@ class _LocationScreenState extends State<LocationScreen> {
                         children: [
                           Column(
                             children: [
-                              Text(
+                              const Text(
                                 'Humidity',
                                 style: kweatherTabs,
                               ),
@@ -150,7 +152,7 @@ class _LocationScreenState extends State<LocationScreen> {
                           ),
                           Column(
                             children: [
-                              Text(
+                              const Text(
                                 'Pressure',
                                 style: kweatherTabs,
                               ),
@@ -162,7 +164,7 @@ class _LocationScreenState extends State<LocationScreen> {
                           ),
                           Column(
                             children: [
-                              Text(
+                              const Text(
                                 'Wind',
                                 style: kweatherTabs,
                               ),
